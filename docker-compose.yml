@@ -1,25 +1,21 @@
-version: "3"
+version: "3.4"
 
 services:
   nginx:
     build:
       context: .
-      dockerfile: Dockerfile
+      target: nginx
     ports:
-      - "9000:80"
+      - "9000:9000"
     networks:
         - app-network
-    volumes:
-      - ./:/var/www/app
 
   php:
     build:
       context: .
-      dockerfile: Dockerfile
+      target: php
     networks:
       - app-network
-    volumes:
-      - ./:/var/www/app
 
 networks:
   app-network:
