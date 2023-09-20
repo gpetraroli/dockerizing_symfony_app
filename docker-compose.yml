@@ -1,7 +1,10 @@
 version: "3.4"
 
+name: app
+
 services:
   nginx:
+    image: app_nginx
     build:
       context: .
       target: nginx
@@ -11,11 +14,24 @@ services:
         - app-network
 
   php:
+    image: app_php
     build:
       context: .
       target: php
     networks:
       - app-network
+
+  mysql:
+    image: mysql:8.1
+    ports:
+      - "4000:3306"
+    environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: app
+        MYSQL_USER: app
+        MYSQL_PASSWORD: app
+    networks:
+        - app-network
 
 networks:
   app-network:
