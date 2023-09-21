@@ -1,38 +1,33 @@
 version: "3.4"
 
-name: app
+name: ${APP:-app}
 
 services:
   nginx:
     image: app_nginx
+    container_name: ${APP:-app}_nginx
     build:
       context: .
       target: nginx
     ports:
-      - "9000:9000"
-    networks:
-        - app-network
+      - "${NGINX_PORT:-9000}:9000"
 
   php:
     image: app_php
+    container_name: ${APP:-app}
     build:
       context: .
       target: php
-    networks:
-      - app-network
+#    TODO: project volume
 
   mysql:
     image: mysql:8.1
+    container_name: ${APP:-app}_mysql
     ports:
-      - "4000:3306"
+      - "${MYSQL_PORT:-3306}:3306"
     environment:
-        MYSQL_ROOT_PASSWORD: root
-        MYSQL_DATABASE: app
-        MYSQL_USER: app
-        MYSQL_PASSWORD: app
-    networks:
-        - app-network
-
-networks:
-  app-network:
-    driver: bridge
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+        MYSQL_DATABASE: ${MYSQL_DATABASE:-app}
+        MYSQL_USER: ${MYSQL_USER:-app}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD:-app}
+#    TODO: mysql volume
