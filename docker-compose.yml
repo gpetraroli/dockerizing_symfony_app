@@ -11,6 +11,10 @@ services:
       target: nginx
     ports:
       - "${NGINX_PORT:-9000}:9000"
+    volumes:
+      - ./docker/nginx/:/etc/nginx/conf.d/
+    env_file:
+      - ./docker/.env
 
   php:
     image: app_php
@@ -18,7 +22,10 @@ services:
     build:
       context: .
       target: php
-#    TODO: project volume
+    volumes:
+      - ./:/var/www/app
+    env_file:
+      - ./docker/.env
 
   mysql:
     image: mysql:8.1
@@ -31,3 +38,5 @@ services:
         MYSQL_USER: ${MYSQL_USER:-app}
         MYSQL_PASSWORD: ${MYSQL_PASSWORD:-app}
 #    TODO: mysql volume
+    env_file:
+      - ./docker/.env
