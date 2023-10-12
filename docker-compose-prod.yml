@@ -9,8 +9,6 @@ services:
         build:
             context: .
             target: nginx
-        ports:
-            - 80:80
         volumes:
             - ./docker/nginx/:/etc/nginx/conf.d/
 
@@ -22,12 +20,12 @@ services:
             target: php
         volumes:
             - ./:/var/www/app
+        networks:
+            - main_network
 
     mysql:
         image: mysql:8.1
         container_name: app_mysql
-        ports:
-            - 3306:3306
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: app

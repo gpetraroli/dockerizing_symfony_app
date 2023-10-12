@@ -41,4 +41,4 @@ COPY ./docker/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 # copy project
 COPY . /var/www/app
 
-EXPOSE 9000
+EXPOSE 80 443
