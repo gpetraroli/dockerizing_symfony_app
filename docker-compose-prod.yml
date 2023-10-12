@@ -33,3 +33,7 @@ services:
             MYSQL_PASSWORD: app
         volumes:
             - ./docker/mysql_volume/:/var/lib/mysql
+
+networks:
+    main_network:
+        driver: bridge
